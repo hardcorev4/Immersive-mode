@@ -2,11 +2,33 @@
 
 warn("Loading")
 
+function LoadCustomInstance(url:string,Name:string)
+    if not isfile(Name..".rbxm") then
+        writefile(Name..".rbxm", game:HttpGet(url))
+    end
+
+    return game:GetObjects(getcustomasset(Name..".rbxm",true))[1]
+end
+
 local tweenservice = game:GetService("TweenService")
 local TextChatService = game:GetService("TextChatService")
 local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Functions"))()
 
 local version = "0.1.0"
+
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Loading assets, Please wait...",true)
+
+local entityfolder = Instance.new("Folder",game.ReplicatedStorage)
+entityfolder.Name = "EntityFolder"
+
+local entitytable = {
+    {"https://github.com/hardcorev4/Immersive-mode/raw/refs/heads/main/Models/NewDepth.rbxm","Depth_Model"}
+}
+
+for _ , tab in entitytable do
+    local exampleentity = LoadCustomInstance(tab[1], tab[2])
+    exampleentity.Parent = entityfolder
+end
 
 local gui = Instance.new("ScreenGui",game.Players.LocalPlayer.PlayerGui)
 local frame = Instance.new("Frame",gui)
