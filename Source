@@ -23,6 +23,8 @@ entityfolder.Name = "EntityFolder"
 
 local entitytable = {
     {"https://github.com/hardcorev4/Immersive-mode/raw/refs/heads/main/Models/NewDepth.rbxm","Depth_Model"}
+    {"https://github.com/hardcorev4/Immersive-mode/raw/refs/heads/main/Models/flame.rbxm","Flame_Model"}
+    {"https://github.com/hardcorev4/Immersive-mode/raw/refs/heads/main/Models/hole.rbxm","Hole_Model"}
 }
 
 for _ , tab in entitytable do
