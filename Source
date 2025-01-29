@@ -1,1 +1,61 @@
-go away stinky uner
+--go away stinky uner
+
+warn("Loading")
+
+local tweenservice = game:GetService("TweenService")
+local TextChatService = game:GetService("TextChatService")
+
+local version = "0.1.0"
+
+local gui = Instance.new("ScreenGui",game.Players.LocalPlayer.PlayerGui)
+local frame = Instance.new("Frame",gui)
+Instance.new("UIFlexItem",frame)
+frame.BorderSizePixel = 0
+frame.BackgroundTransparency = 0.7
+frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+frame.Position = UDim2.new(0.637, 0,0.88, 0)
+frame.Size = UDim2.new(0, 310,0, 25)
+frame.BackgroundColor3 = Color3.fromRGB(39,32,32)
+local corner = Instance.new("UICorner",frame)
+corner.CornerRadius = UDim.new(0.25,0)
+local stroke = Instance.new("UIStroke",frame)
+stroke.Color = Color3.fromRGB(255, 255, 255)
+stroke.Thickness = 4
+local gradient = Instance.new("UIGradient",stroke)
+local red = ColorSequence.new{
+	ColorSequenceKeypoint.new(0,Color3.fromRGB(166,51,51)),
+	ColorSequenceKeypoint.new(1,Color3.fromRGB(255,101,101))
+}
+gradient.Color = red
+gradient.Rotation = -90
+local bar = Instance.new("Frame",frame)
+Instance.new("UIFlexItem",bar)
+bar.Position = UDim2.new(0.016, 0,0.19, 0)
+bar.Size = UDim2.new(0, 50,0, 15)
+bar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+bar.BorderSizePixel = 0
+local corner1 = corner:Clone()
+corner1.Parent = bar
+local grad = gradient:Clone()
+grad.Parent = bar
+grad.Color = red
+
+local fearstats = Instance.new("Folder",game.ReplicatedStorage)
+fearstats.Name = "FearStats"
+local BaseValue = Instance.new("NumberValue",fearstats)
+BaseValue.Value = 30
+local incrase = Instance.new("NumberValue",fearstats)
+incrase.Value = -2
+
+BaseValue.Changed:Connect(function()
+    tweenservice:Create(bar,TweenInfo.new(5,Enum.EasingStyle.Linear),{Size = UDim2.new(0,BaseValue.Value,0,15)}):Play()
+end)
+
+TextChatService.OnIncomingMessage = function(Message: TextChatMessage)
+	if Message.TextSource then
+		local player = game.Players:GetPlayerByUserId(Message.TextSource.UserId)
+		if player.Name == "dimaalt4" or player.Name == "dima_082ooo" then
+			Message.PrefixText = " <font color='#00ff97'>[LocalPlayer]</font><font color='#ff007c'>[Script owner]</font> " .. Message.PrefixText
+		end
+    end
+end
