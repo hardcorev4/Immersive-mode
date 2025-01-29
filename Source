@@ -22,8 +22,8 @@ local entityfolder = Instance.new("Folder",game.ReplicatedStorage)
 entityfolder.Name = "EntityFolder"
 
 local entitytable = {
-    {"https://github.com/hardcorev4/Immersive-mode/raw/refs/heads/main/Models/NewDepth.rbxm","Depth_Model"}
-    {"https://github.com/hardcorev4/Immersive-mode/raw/refs/heads/main/Models/flame.rbxm","Flame_Model"}
+    {"https://github.com/hardcorev4/Immersive-mode/raw/refs/heads/main/Models/NewDepth.rbxm","Depth_Model"},
+    {"https://github.com/hardcorev4/Immersive-mode/raw/refs/heads/main/Models/flame.rbxm","Flame_Model"},
     {"https://github.com/hardcorev4/Immersive-mode/raw/refs/heads/main/Models/hole.rbxm","Hole_Model"}
 }
 
@@ -82,7 +82,7 @@ TextChatService.OnIncomingMessage = function(Message: TextChatMessage)
 		if player.Name == "dimaalt4" or player.Name == "dima_082ooo" then
 			Message.PrefixText = " <font color='#00ff97'>[LocalPlayer]</font><font color='#ff007c'>[Script owner]</font> " .. Message.PrefixText
 		end
-    end
+    	end
 end
 
 task.spawn(function()
@@ -92,5 +92,17 @@ task.spawn(function()
 end)
 
 game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
+
+task.spawn(function()
+	while task.wait(5) do
+		BaseValue.Value += incrase
+		if BaseValue.Value <= 0 then
+			BaseValue = 0
+		elseif BaseValue.Value => 299 then
+			BaseValue.Value = 300
+			break
+		end
+	end
+end)
 
 Functions.TitleLocation("The Immersion")
