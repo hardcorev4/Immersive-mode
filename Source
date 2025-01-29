@@ -4,6 +4,7 @@ warn("Loading")
 
 local tweenservice = game:GetService("TweenService")
 local TextChatService = game:GetService("TextChatService")
+local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Functions"))()
 
 local version = "0.1.0"
 
@@ -59,3 +60,13 @@ TextChatService.OnIncomingMessage = function(Message: TextChatMessage)
 		end
     end
 end
+
+task.spawn(function()
+    require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Immersive mode V"..version.." successfully loaded",true)
+    task.wait(3)
+    require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Made by LocalPlayer",true)
+end)
+
+game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
+
+Functions.TitleLocation("The Immersion")
