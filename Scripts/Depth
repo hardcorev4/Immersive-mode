@@ -53,7 +53,7 @@ wait(2)
 sound:Destroy()
 
 model.Parent = game.Workspace
-Entity.CFrame = rooms:GetChildren()[1].RoomEntrance
+Entity.CFrame = rooms:GetChildren()[1].RoomEntrance.CFrame
 task.wait(3)
 
 for i = 1,4 do
