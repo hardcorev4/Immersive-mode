@@ -29,6 +29,7 @@ local entitytable = {
 
 for _ , tab in entitytable do
     local exampleentity = LoadCustomInstance(tab[1], tab[2])
+    ecampleentity.Name = tab[2]
     exampleentity.Parent = entityfolder
 end
 
