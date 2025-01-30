@@ -1,0 +1,71 @@
+local functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Functions"))()
+
+local pcal = game.ReplicatedStorage.EntityFolder:FindFirstChild("Depth_Model")
+if not pcal then warn("Depth model not found") return end
+local model = game.ReplicatedStorage.EntityFolder.Depth_Model
+
+local Entity = model.DepthMoving
+local entityspeed = 200
+
+local rooms = game.Workspace.CurrentRooms
+
+function MoveTo(speed,pos)
+    local distance = (Entity.Position - pos.Position).Magnitude
+    local newspeed = distance / speed
+    local tweeninfo = TweenInfo.new(newspeed,Enum.EasingStyle.Linear)
+    local twening = game:GetService("TweenService"):Create(Entity, tweeninfo, {CFrame = pos.CFrame})
+    twening:Play()
+    twening.Completed:Wait()
+end
+
+local function GetWaypoints()
+    local waypoints = {}
+    for _ , room: Model in rooms:GetChildren() do
+        if room:FindFirstChild("RoomExit") and room:FindFirstChild("RoomEntrance") then
+            table.insert(waypoints,room.RoomExit.CFrame)
+            if room:FindFirstChild("PathfindNodes") then
+                for _ , node in room.PathfindNodes:GetChildren() do
+                    table.insert(node.CFrame + Vector3.new(0,4,0))
+                end
+            end
+        end
+    end
+    return waypoints
+end
+
+functions.LightRecolorAdvanced(Color3.fromRGB(127, 249, 255),Color3.fromRGB(0, 174, 255),Color3.new(0.129412, 0.278431, 0.505882),0.3,0,TweenInfo.new(0.1,Enum.EasingStyle.Sine,Enum.EasingDirection.In),false)
+
+local sound = Instance.new("Sound",game.Workspace)
+sound.SoundId = "rbxassetid://12221990"
+sound.PlaybackSpeed = 0.2
+sound.Volume = 5
+local octave = Instance.new("PitchShiftSoundEffect",sound)
+octave.Octave = 0.5
+local lvl = Instance.new("DistortionSoundEffect",sound)
+lvl.Level = 0.85
+
+local correction = Instance.new("ColorCorrectionEffect",game.Lighting)
+correction.TintColor = Color3.new(0.529412, 0.686275, 1.000000)
+game:GetService("TweenService"):Create(correction, TweenInfo.new(5,Enum.EasingStyle.Linear), {TintColor = Color3.fromRGB(255,255,255)})
+
+sound:Play()
+wait(2)
+sound:Destroy()
+
+model.Parent = game.Workspace
+Entity.CFrame = rooms:GetChildren()[1].RoomEntrance
+task.wait(3)
+
+for i = 1,4 do
+    local waypoints = GetWaypoints()
+    for _ , point in waypoints do
+        MoveTo(entityspeed, point)
+    end
+    for l = #waypoints , 1 , -1 do
+        local point = waypoints[l]
+        MoveTo(entityspeed, point)
+    end
+end
+
+MoveTo(entityspeed, Entity.CFrame - Vector3.new(0,500,0))
+model:Destroy()
