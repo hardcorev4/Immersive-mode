@@ -33,7 +33,7 @@ local function GetWaypoints()
     return waypoints
 end
 
-functions.LightRecolorAdvanced(Color3.fromRGB(127, 249, 255),Color3.fromRGB(0, 174, 255),Color3.new(0.129412, 0.278431, 0.505882),0.3,0,TweenInfo.new(0.1,Enum.EasingStyle.Sine,Enum.EasingDirection.In),false)
+functions.LightRecolor(0.2,Color3.fromRGB(157, 245, 255),Color3.fromRGB(0, 174, 255),Color3.fromRGB(98, 55, 132))
 
 local sound = Instance.new("Sound",game.Workspace)
 sound.SoundId = "rbxassetid://12221990"
