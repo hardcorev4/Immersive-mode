@@ -1,8 +1,8 @@
 local functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Functions"))()
 
-local pcal = game.ReplicatedStorage.EntityFolder:FindFirstChild("Depth_Model")
+local pcal = game.Lighting.EntityFolder:FindFirstChild("Depth_Model")
 if not pcal then warn("Depth model not found") return end
-local model = game.ReplicatedStorage.EntityFolder.Depth_Model
+local model = game.Lighting.EntityFolder.Depth_Model
 
 local Entity = model.DepthMoving
 local entityspeed = 200
