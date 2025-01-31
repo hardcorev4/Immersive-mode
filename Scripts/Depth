@@ -52,6 +52,17 @@ model.Parent = game.Workspace
 Entity.CFrame = rooms:GetChildren()[1].RoomEntrance.CFrame
 task.wait(3)
 
+task.spawn(function()
+    while model.Parent and task.wait() do
+        local distance = (Entity.Position - pos.Position).Magnitude
+        if distance <= 120 then
+            local magn = 5 / 120 * (120 - distance)
+            local rought = 20 / 120 * (120 - distance)
+            require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.camShaker:ShakeOnce(magn,rought,0.1,1))
+        end
+    end
+end)
+
 for i = 1,4 do
     local waypoints = GetWaypoints()
     for _ , point in waypoints do
