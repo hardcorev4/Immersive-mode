@@ -29,7 +29,7 @@ local entitytable = {
 
 for _ , tab in entitytable do
     local exampleentity = LoadCustomInstance(tab[1], tab[2])
-    ecampleentity.Name = tab[2]
+    exampleentity.Name = tab[2]
     exampleentity.Parent = entityfolder
 end
 
@@ -99,7 +99,7 @@ task.spawn(function()
 		BaseValue.Value += incrase
 		if BaseValue.Value <= 0 then
 			BaseValue = 0
-		elseif BaseValue.Value => 299 then
+		elseif BaseValue.Value >= 299 then
 			BaseValue.Value = 300
 			break
 		end
