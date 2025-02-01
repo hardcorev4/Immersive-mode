@@ -33,6 +33,13 @@ for _ , tab in entitytable do
     exampleentity.Parent = entityfolder
 end
 
+local userSettings = UserSettings():GetService("UserGameSettings")
+local qualityLevel = userSettings.SavedQualityLevel
+
+if qualityLevel == Enum.SavedQualitySetting.[0] then
+	warn("low graphic detected")
+end
+
 local gui = Instance.new("ScreenGui",game.Players.LocalPlayer.PlayerGui)
 local frame = Instance.new("Frame",gui)
 Instance.new("UIFlexItem",frame)
