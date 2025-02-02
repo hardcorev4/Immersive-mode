@@ -61,7 +61,7 @@ for i = 0,4 do
         end
         if room then
             if room:FindFirstChild("RoomExit") then
-                MoveTo(200,RoomExit.CFrame)
+                MoveTo(200,room.RoomExit.CFrame)
             end
         end
     end
@@ -79,7 +79,7 @@ for i = 0,4 do
         end
         if room then
             if room:FindFirstChild("RoomEntrance") then
-                MoveTo(200,RoomEntrance.CFrame)
+                MoveTo(200,room.RoomEntrance.CFrame)
             end
         end
     end
