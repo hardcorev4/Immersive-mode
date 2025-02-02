@@ -5,7 +5,6 @@ if not pcal then warn("Depth model not found") return end
 local model = game.Lighting.EntityFolder.Depth_Model
 
 local Entity = model.DepthMoving
-local entityspeed = 200
 
 local rooms = game.Workspace.CurrentRooms
 
@@ -13,27 +12,12 @@ function MoveTo(speed,pos)
     local distance = (Entity.Position - pos.Position).Magnitude
     local newspeed = distance / speed
     local tweeninfo = TweenInfo.new(newspeed,Enum.EasingStyle.Linear)
-    local twening = game:GetService("TweenService"):Create(Entity, tweeninfo, {CFrame = pos.CFrame})
+    local twening = game:GetService("TweenService"):Create(Entity, tweeninfo, {CFrame = pos})
     twening:Play()
     twening.Completed:Wait()
 end
 
-local function GetWaypoints()
-    local waypoints = {}
-    for _ , room: Model in rooms:GetChildren() do
-        if room:FindFirstChild("RoomExit") and room:FindFirstChild("RoomEntrance") then
-            table.insert(waypoints,room.RoomExit.CFrame)
-            if room:FindFirstChild("PathfindNodes") then
-                for _ , node in room.PathfindNodes:GetChildren() do
-                    table.insert(waypoints,node.CFrame + Vector3.new(0,4,0))
-                end
-            end
-        end
-    end
-    return waypoints
-end
-
-functions.LightRecolor(0.2,Color3.fromRGB(157, 245, 255),Color3.fromRGB(0, 174, 255),Color3.fromRGB(98, 55, 132))
+functions.LightRecolor(0.5,Color3.fromRGB(157, 245, 255),Color3.fromRGB(0, 174, 255))
 
 local sound = Instance.new("Sound",game.Workspace)
 sound.SoundId = "rbxassetid://12221990"
@@ -63,16 +47,43 @@ task.spawn(function()
     end
 end)
 
-for i = 1,4 do
-    local waypoints = GetWaypoints()
-    for _ , point in waypoints do
-        MoveTo(entityspeed, point)
+for i = 0,4 do
+    for indx = 1,#game.Workspace.CurrentRooms:GetChildren(),1 do
+        local room = game.Workspace.CurrentRooms:GetChildren()[indx]
+        if room then
+            if room:FindFirstChild("PathfindNodes") then
+                for _ , node in room.PathfindNodes do
+                    if node.Parent then
+                        MoveTo(200,node.CFrame)
+                    end
+                end
+            end
+        end
+        if room then
+            if room:FindFirstChild("RoomExit") then
+                MoveTo(200,RoomExit.CFrame)
+            end
+        end
     end
-    for l = #waypoints , 1 , -1 do
-        local point = waypoints[l]
-        MoveTo(entityspeed, point)
+    for indx = #game.Workspace.CurrentRooms:GetChildren(),1,-1 do
+        local room = game.Workspace.CurrentRooms:GetChildren()[indx]
+        if room then
+            if room:FindFirstChild("PathfindNodes") then
+                local noder = table.sort(room.PathfindNodes:GetChildren(),function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
+                for _ , node in noder do
+                    if node.Parent then
+                        MoveTo(200,node.CFrame)
+                    end
+                end
+            end
+        end
+        if room then
+            if room:FindFirstChild("RoomEntrance") then
+                MoveTo(200,RoomEntrance.CFrame)
+            end
+        end
     end
 end
 
-MoveTo(entityspeed, Entity.CFrame - Vector3.new(0,500,0))
+MoveTo(200, Entity.CFrame - Vector3.new(0,600,0))
 model:Destroy()
