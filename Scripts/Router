@@ -1,0 +1,136 @@
+local spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Entity%20Spawner/V2/Source.lua"))()
+local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
+local moved = nil
+
+function light(tim,color0,color1)
+	local tweenservice = game:GetService("TweenService")
+	local info = TweenInfo.new(tim,Enum.EasingStyle.Linear)
+	for _ , light in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+		if light:IsA("Light") or light:IsA("SurfaceLight") or light:IsA("SpotLight") then
+			local target = {Color = color1}
+			local anim = tweenservice:Create(light,info,target)
+			anim:Play()
+		end
+		if light:IsA("MeshPart") and light.Material == Enum.Material.Neon  and light.Name ~= "Skybox" then
+			local target1 = {Color = color0}
+			local anim2 = tweenservice:Create(light,info,target1)
+			anim2:Play()
+		end
+	end
+end
+
+local sound = Instance.new("Sound",game.Workspace)
+sound.SoundId = "rbxassetid://4499400560"
+sound.PlaybackSpeed = 0.05
+sound.Volume = 5
+local octave = Instance.new("PitchShiftSoundEffect",sound)
+octave.Octave = 0.5
+local lvl = Instance.new("DistortionSoundEffect",sound)
+lvl.Level = 0.99
+
+sound:Play()
+
+light(2.5,Color3.fromRGB(202, 87, 49),Color3.fromRGB(116, 50, 0))
+
+task.wait(3.5)
+
+moved = game.Players.LocalPlayer.Character.Humanoid.Running:connect(function()
+	moved:Disconnect()
+	local sound = Instance.new("Sound",game.Workspace)
+	sound.SoundId = "rbxassetid://8325519723"
+	sound.Volume = 1
+	local octave = Instance.new("PitchShiftSoundEffect",sound)
+	octave.Octave = 0.5
+	
+	local screen = Instance.new("ScreenGui",game.Players.LocalPlayer.PlayerGui)
+	
+	local background = Instance.new("ImageLabel",screen)
+	background.AnchorPoint = Vector2.new(0.5,0.5)
+	background.Position = UDim2.new(0.5,0,0.5,0)
+	background.Size = UDim2.new(0,1500,0,1500)
+	background.Image = "http://www.roblox.com/asset/?id=109175784657012"
+	
+	sound:Play()
+	
+	task.spawn(function()
+		while task.wait(0.05) do
+			background.Rotation += 90
+		end
+	end)
+	
+	task.wait(2)
+	background:Destroy()
+	game.Players.LocalPlayer.Character.Humanoid:TakeDamage(125)
+	firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"You died to who you call Router","When he spawn lights turn dark orange","He's blind but he hears very well","Dont move unitl he disappear!"},"Blue")
+        game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Router"
+end)
+
+local entity = spawner.Create({
+	Entity = {
+		Name = "Router",
+		Asset = "rbxassetid://12665679269",
+		HeightOffset = 0
+	},
+	Lights = {
+		Flicker = {
+			Enabled = false,
+			Duration = 1
+		},
+		Shatter = false,
+		Repair = false
+	},
+	Earthquake = {
+		Enabled = false
+	},
+	CameraShake = {
+		Enabled = false,
+		Range = 100,
+		Values = {1.5, 20, 0.1, 1} -- Magnitude, Roughness, FadeIn, FadeOut
+	},
+	Movement = {
+		Speed = 25,
+		Delay = 0,
+		Reversed = false
+	},
+	Rebounding = {
+		Enabled = false,
+		Type = "Ambush", -- "Blitz"
+		Min = 1,
+		Max = 3,
+		Delay = 0
+	},
+	Damage = {
+		Enabled = false,
+		Range = 50,
+		Amount = 125
+	},
+	Crucifixion = {
+		Enabled = false,
+		Range = 40,
+		Resist = false,
+		Break = true
+	},
+	Death = {
+		Type = "Guiding", -- "Curious"
+		Hints = {"CHEATER!!!!!!!!"},
+		Cause = "Router"
+	}
+})
+
+entity:SetCallback("OnDespawning", function()
+	moved:Disconnect()
+	if _G.router == false then	
+	    	achievementGiver({
+		    Title = "Stop",
+		    Desc = "I said dont move",
+		    Reason = "Encounter Router",
+		    Image = "http://www.roblox.com/asset/?id=120694284149293"
+		})
+		_G.router = true
+	end
+	light(2.5,Color3.fromRGB(202, 87, 49),Color3.fromRGB(255, 150, 0))
+end)
+
+entity:Run()
+task.wait(10)
+_G.stats.Value += 50
