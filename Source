@@ -146,29 +146,29 @@ lastroom.changed:connect(function()
     if table.find(detphsp, lastroom.Value) then
 	task.spawn(function()
 	        task.wait(sync:generateFullRandom(2,10,lastroom.Value))
-	        loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Immersive%20mode/Detph"))()
+	        loadstring(game:HttpGet("https://raw.githubusercontent.com/hardcorev4/Immersive-mode/refs/heads/main/Scripts/Depth"))()
 	end)
     end
     if table.find(routersp, lastroom.Value) then
 	task.spawn(function()
 	        task.wait(sync:generateFullRandom(5,20,lastroom.Value))
-	        loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Immersive%20mode/Router"))()
+	        loadstring(game:HttpGet("https://raw.githubusercontent.com/hardcorev4/Immersive-mode/refs/heads/main/Scripts/Router"))()
 	end)
     end
 	if table.find(darksp, lastroom.Value) then
 		task.spawn(function()
-	        	loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Immersive%20mode/Darkness"))()
+	        	loadstring(game:HttpGet("https://raw.githubusercontent.com/hardcorev4/Immersive-mode/refs/heads/main/Scripts/Darkness"))()
 		end)
     	end
 	if table.find(holesp, lastroom.Value) then
 		task.spawn(function()
-	        	loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Immersive%20mode/Hole"))()
+	        	loadstring(game:HttpGet("https://raw.githubusercontent.com/hardcorev4/Immersive-mode/refs/heads/main/Scripts/Hole"))()
 		end)
     	end
 	if table.find(flamesp, lastroom.Value) then
 		task.spawn(function()
-			task.wait(sync:generateFullRandom(0.1,0.5,lastroom.Value))
-	        	loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Immersive%20mode/Flame"))()
+			task.wait(0.5)
+	        	loadstring(game:HttpGet("https://raw.githubusercontent.com/hardcorev4/Immersive-mode/refs/heads/main/Scripts/Flame"))()
 		end)
     	end
 end)
