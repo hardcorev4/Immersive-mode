@@ -1,23 +1,126 @@
-local functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Functions"))()
+local spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Entity%20Spawner/V2/Source.lua"))()
+local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
 
-local pcal = game.Lighting.EntityFolder:FindFirstChild("Depth_Model")
-if not pcal then warn("Depth model not found") return end
-local model = game.Lighting.EntityFolder.Depth_Model
-
-local Entity = model.DepthMoving
-
-local rooms = game.Workspace.CurrentRooms
-
-function MoveTo(speed,pos)
-    local distance = (Entity.Position - pos.Position).Magnitude
-    local newspeed = distance / speed
-    local tweeninfo = TweenInfo.new(newspeed,Enum.EasingStyle.Linear)
-    local twening = game:GetService("TweenService"):Create(Entity, tweeninfo, {CFrame = pos})
-    twening:Play()
-    twening.Completed:Wait()
+function light(tim,color0,color1)
+	local tweenservice = game:GetService("TweenService")
+	local info = TweenInfo.new(tim,Enum.EasingStyle.Linear)
+	for _ , light in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+		if light:IsA("Light") or light:IsA("SurfaceLight") or light:IsA("SpotLight") then
+			local target = {Color = color1}
+			local anim = tweenservice:Create(light,info,target)
+			anim:Play()
+		end
+		if light:IsA("MeshPart") and light.Material == Enum.Material.Neon  and light.Name ~= "Skybox" then
+			local target1 = {Color = color0}
+			local anim2 = tweenservice:Create(light,info,target1)
+			anim2:Play()
+		end
+	end
 end
 
-functions.LightRecolor(0.5,Color3.fromRGB(157, 245, 255),Color3.fromRGB(0, 174, 255))
+local entity = spawner.Create({
+	Entity = {
+		Name = "Template Entity",
+		Asset = "rbxassetid://17508750627",
+		HeightOffset = 0
+	},
+	Lights = {
+		Flicker = {
+			Enabled = false,
+			Duration = 1
+		},
+		Shatter = false,
+		Repair = false
+	},
+	Earthquake = {
+		Enabled = false
+	},
+	CameraShake = {
+		Enabled = true,
+		Range = 100,
+		Values = {1.5, 20, 0.1, 1} -- Magnitude, Roughness, FadeIn, FadeOut
+	},
+	Movement = {
+		Speed = 200,
+		Delay = 3,
+		Reversed = false
+	},
+	Rebounding = {
+		Enabled = true,
+		Type = "Ambush", -- "Blitz"
+		Min = 3,
+		Max = 3,
+		Delay = 0
+	},
+	Damage = {
+		Enabled = true,
+		Range = 50,
+		Amount = 125
+	},
+	Crucifixion = {
+		Enabled = true,
+		Range = 60,
+		Resist = false,
+		Break = true
+	},
+	Death = {
+		Type = "Guiding", -- "Curious"
+		Hints = {"You died to who you call Depth...", "When he spawns lights turn blue", "Hide if this happened!"},
+		Cause = "Detph"
+	}
+})
+
+entity:SetCallback("OnDespawned", function()
+	if _G.detph == false then
+	    	achievementGiver({
+		    Title = "Blue Depths",
+		    Desc = "Do you think I only fly by once?",
+		    Reason = "Encounter Depth",
+		    Image = "http://www.roblox.com/asset/?id=120436258363580"
+		})
+		_G.detph = true
+	end
+end)
+
+entity:SetCallback("OnDamagePlayer", function(newHealth)
+	local sound = Instance.new("Sound",game.Workspace)
+	sound.SoundId = "rbxassetid://131138848"
+	local octave = Instance.new("PitchShiftSoundEffect",sound)
+	octave.Octave = 0.5
+	local level = Instance.new("DistortionSoundEffect",sound)
+	level.Level = 0.97
+	
+	local screen = Instance.new("ScreenGui",game.Players.LocalPlayer.PlayerGui)
+	
+	local background = Instance.new("Frame",screen)
+	background.AnchorPoint = Vector2.new(0.5,0.5)
+	background.Size = UDim2.new(10,0,10,0)
+	background.BackgroundColor3 = Color3.fromRGB(0, 157, 255)
+	local image = Instance.new("ImageLabel",screen)
+	image.AnchorPoint = Vector2.new(0.5,0.5)
+	image.Position = UDim2.new(0.5, 0, 0.5, 0)
+	image.BackgroundTransparency = 1
+	image.Size = UDim2.new(0, 50, 0, 50)
+	image.LayoutOrder = 0
+	image.BorderSizePixel = 0
+	image.Image = "http://www.roblox.com/asset/?id=11278229112"
+	
+	task.spawn(function()
+		while task.wait(0.08) do
+			background.BackgroundColor3 = Color3.fromRGB(0, 17, 255)
+			task.wait(0.08)
+			background.BackgroundColor3 = Color3.fromRGB(0, 157, 255)
+		end
+	end)
+	
+	sound:Play()
+	
+	game:GetService("TweenService"):Create(image,TweenInfo.new(0.25,Enum.EasingStyle.Linear),{Size = UDim2.new(0, 1300, 0, 1300)}):Play()
+	task.wait(1)
+	screen:Destroy()
+end)
+
+light(2,Color3.fromRGB(127, 249, 255),Color3.fromRGB(0, 174, 255))
 
 local sound = Instance.new("Sound",game.Workspace)
 sound.SoundId = "rbxassetid://12221990"
@@ -32,58 +135,6 @@ sound:Play()
 wait(2)
 sound:Destroy()
 
-model.Parent = game.Workspace
-Entity.CFrame = rooms:GetChildren()[1].RoomEntrance.CFrame
-task.wait(3)
-
-task.spawn(function()
-    while model.Parent and task.wait() do
-        local distance = (Entity.Position - pos.Position).Magnitude
-        if distance <= 120 then
-            local magn = 5 / 120 * (120 - distance)
-            local rought = 20 / 120 * (120 - distance)
-            require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game.camShaker:ShakeOnce(magn,rought,0.1,1))
-        end
-    end
-end)
-
-for i = 0,4 do
-    for indx = 1,#game.Workspace.CurrentRooms:GetChildren(),1 do
-        local room = game.Workspace.CurrentRooms:GetChildren()[indx]
-        if room then
-            if room:FindFirstChild("PathfindNodes") then
-                for _ , node in room.PathfindNodes do
-                    if node.Parent then
-                        MoveTo(200,node.CFrame)
-                    end
-                end
-            end
-        end
-        if room then
-            if room:FindFirstChild("RoomExit") then
-                MoveTo(200,room.RoomExit.CFrame)
-            end
-        end
-    end
-    for indx = #game.Workspace.CurrentRooms:GetChildren(),1,-1 do
-        local room = game.Workspace.CurrentRooms:GetChildren()[indx]
-        if room then
-            if room:FindFirstChild("PathfindNodes") then
-                local noder = table.sort(room.PathfindNodes:GetChildren(),function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
-                for _ , node in noder do
-                    if node.Parent then
-                        MoveTo(200,node.CFrame)
-                    end
-                end
-            end
-        end
-        if room then
-            if room:FindFirstChild("RoomEntrance") then
-                MoveTo(200,room.RoomEntrance.CFrame)
-            end
-        end
-    end
-end
-
-MoveTo(200, Entity.CFrame - Vector3.new(0,600,0))
-model:Destroy()
+entity:Run()
+task.wait(5)
+_G.stats.Value += 45
