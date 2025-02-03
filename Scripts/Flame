@@ -1,0 +1,56 @@
+local damages = true
+local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
+local tweenservice = game:GetService("TweenService")
+
+game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren() - 1]:SetAttribute("Ambient",Color3.new(0.627451, 0.352941, 0.054902))
+_G.baseval = 6
+local model = game:GetObjects("rbxassetid://12712500267")[1].holenew
+model.atta.Light.Range = 0
+model.Anchored = true
+model.Parent = game.Workspace
+model.CFrame = game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren() - 1].Parts.Floor.CFrame + Vector3.new(0,6,0)
+model.Ambience:Play()
+model.Spawn:Play()
+task.wait(1)
+task.spawn(function()
+	while damages == true do
+	    task.wait(0.5)
+        local ray = game.Workspace:Raycast(model.Position,game.Players.LocalPlayer.Character.HumanoidRootPart.Position - model.Position)
+        if ray.Instance.Parent == game.Players.LocalPlayer.Character or ray.Instance.Parent.Parent == game.Players.LocalPlayer.Character then
+            warn("parent")
+            local light = Instance.new("PointLight",game.Players.LocalPlayer.Character.HumanoidRootPart)
+            light.Color = Color3.fromRGB(255, 64, 0)
+            light.Brightness = 5
+            light.Range = 20
+            local anim = game:GetService("TweenService"):Create(light,TweenInfo.new(0.3,Enum.EasingStyle.Linear),{Range = 0})
+            local anim2 = game:GetService("TweenService"):Create(light,TweenInfo.new(0.3,Enum.EasingStyle.Linear),{Brightness = 0})
+            anim:Play()
+            anim2:Play()
+            game.Players.LocalPlayer.Character.Humanoid:TakeDamage(10)
+	    if game.Players.LocalPlayer.Character.Humanoid.Health <= 1 then
+		damages = false
+		firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"You died to who you call Flame...","He spawns in center of room and releases burning rays","Find an object to hide behind!"},"Blue")
+        	game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Flame"
+	    end
+        end
+    end
+end)
+
+task.wait(20)
+
+damages = false
+_G.baseval = -2
+model.Position = Vector3.new(0,10000000000,0)
+model:Destroy()
+
+task.wait(2)
+
+if _G.flame == false then
+	    	achievementGiver({
+		    Title = "Im feel fire",
+		    Desc = "One wrong step and you will die.",
+		    Reason = "Encounter Flame",
+		    Image = "http://www.roblox.com/asset/?id=111338418814509"
+		})
+		_G.flame = true
+end
