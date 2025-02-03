@@ -10,6 +10,8 @@ local TextChatService = game:GetService("TextChatService")
 local admins = {"SILENCEHARDCORE8","devonpapafrita3"}
 local commands = {"SILENCEHARDCORE8","devonpapafrita3","dimaalt4"}
 
+local functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Functions"))()
+
 local captions = {"Good Luck","Always look away","Pro tip: press alt f4 for god mode","Do you hear that?","Im kill you if you use custom crucfix","Dont ask who is SILENCEHARDCORE8","ъьъ","Welcome to hell","print(working)","BRBRBRBRBRBB","My english on top","Please give me wave 7 day key","<o_o>","Bet that you cant go past door 30",":skull:","Run VIRUS.exe for 99999 robux","What should i type here?",":cool::cool::cool::cool::cool::cool:","Run _G.stats = 300 command for free admin pannel","Dont beg tags","Happy new year!"}
 _G.detph = false
 _G.router = false
@@ -130,9 +132,13 @@ warn("Loaded")
 
 lastroom.changed:wait()
 
+task.spawn(functions.TitleLocation, "The Immersion", 6)
+
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Immersive mode ".. _G.ver .." activated",true)
 task.wait(3)
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Made by LocalPlayer(dima_082ooo)",true)
+task.wait(3)
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Join this server to support creator https://discord.gg/dCsx7VzFfe",true)
 task.wait(3)
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption(captions[sync:generateFullRandom(0,#captions,seed)],true)
 
