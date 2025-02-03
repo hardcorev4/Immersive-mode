@@ -1,0 +1,67 @@
+warn("started")
+
+local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
+local lastroom = game.ReplicatedStorage.GameData.LatestRoom
+local lastrooms = game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren() - 1]
+local can = true
+
+function light(tim,color0,color1)
+	local tweenservice = game:GetService("TweenService")
+	local info = TweenInfo.new(tim,Enum.EasingStyle.Linear)
+	for _ , light in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+		if light:IsA("Light") or light:IsA("SurfaceLight") or light:IsA("SpotLight") then
+			local target = {Color = color1}
+			local anim = tweenservice:Create(light,info,target)
+			anim:Play()
+		end
+		if light:IsA("MeshPart") and light.Material == Enum.Material.Neon  and light.Name ~= "Skybox" then
+			local target1 = {Color = color0}
+			local anim2 = tweenservice:Create(light,info,target1)
+			anim2:Play()
+		end
+	end
+end
+
+local sound = Instance.new("Sound",game.Workspace)
+sound.SoundId = "rbxassetid://9120549564"
+sound.PlaybackSpeed = 0.45
+sound.Volume = 0.05
+local lvl = Instance.new("DistortionSoundEffect",sound)
+lvl.Level = 0.96
+
+lastrooms:SetAttribute("Ambient",Color3.fromRGB(0,0,0))
+
+light(1,Color3.fromRGB(0,0,0),Color3.fromRGB(0,0,0))
+
+task.spawn(function()
+	_G.baseval = 5
+	task.wait(5)
+	sound:Play()
+	task.wait(5)
+	repeat
+		sound.Volume += 0.01
+		task.wait(0.065)
+	until sound.Volume >= 0.49
+	if can == true then
+		game.Players.LocalPlayer.Character.Humanoid:TakeDamage(100)
+		 sound:Destroy()
+		firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"You died to who you call Darkness...","He attack when lights turn off in every room","to survive him you need open next door!"},"Blue")
+        	game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Darkness"
+	end
+end)
+
+lastroom.Changed:connect(function()
+	_G.baseval = -2
+	can = false
+	sound:Destroy()
+	task.wait(2)
+	if _G.darkness == false then
+		achievementGiver({
+		    Title = "Unknown",
+		    Desc = "No one know what can hide in the darkness",
+		    Reason = "Encounter Darkness",
+		    Image = "http://www.roblox.com/asset/?id=92630376345995"
+		})
+	_G.darkness = true
+	end
+end)
