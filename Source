@@ -1,5 +1,5 @@
 warn("Loading")
-_G.ver = 0.62
+_G.ver = 0.7
 
 local sync = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/SyncHelper.lua"))()
 local seed = game.ReplicatedStorage.GameData.GameSeed.Value
@@ -7,7 +7,7 @@ local lastroom = game.ReplicatedStorage.GameData.LatestRoom
 local tweenservice = game:GetService("TweenService")
 local TextChatService = game:GetService("TextChatService")
 
-local whitelist = {"SILENCEHARDCORE8","devonpapafrita3"}
+local admins = {"SILENCEHARDCORE8","devonpapafrita3"}
 local commands = {"SILENCEHARDCORE8","devonpapafrita3","dimaalt4"}
 
 local captions = {"Good Luck","Always look away","Pro tip: press alt f4 for god mode","Do you hear that?","Im kill you if you use custom crucfix","Dont ask who is SILENCEHARDCORE8","ъьъ","Welcome to hell","print(working)","BRBRBRBRBRBB","My english on top","Please give me wave 7 day key","<o_o>","Bet that you cant go past door 30",":skull:","Run VIRUS.exe for 99999 robux","What should i type here?",":cool::cool::cool::cool::cool::cool:","Run _G.stats = 300 command for free admin pannel","Dont beg tags","Happy new year!"}
@@ -113,8 +113,8 @@ TextChatService.OnIncomingMessage = function(Message: TextChatMessage)
 		if player.Name == "dimaalt4" or player.Name == "dima_082ooo" then
 			Message.PrefixText = " <font color='#ff007c'>[Script owner]</font> " .. Message.PrefixText
 		end
-		if table.find(whitelist,player.Name) then
-			Message.PrefixText = " <font color='#00A2FF'>[Cool Guy]</font> " .. Message.PrefixText
+		if table.find(admins,player.Name) then
+			Message.PrefixText = " <font color='#00A2FF'>[Admin]</font> " .. Message.PrefixText
 		end
 		if table.find(commands,player.Name) then
 			if Message.Text.find(Message.Text , "/caption") then
