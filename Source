@@ -1,48 +1,54 @@
---go away stinky uner
-
 warn("Loading")
+_G.ver = 0.62
 
-function LoadCustomInstance(url:string,Name:string)
-    if not isfile(Name..".rbxm") then
-        writefile(Name..".rbxm", game:HttpGet(url))
-    end
+local sync = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/SyncHelper.lua"))()
+local seed = game.ReplicatedStorage.GameData.GameSeed.Value
+local lastroom = game.ReplicatedStorage.GameData.LatestRoom
+local tweenservice = game:GetService("TweenService")
+local TextChatService = game:GetService("TextChatService")
 
-    return game:GetObjects(getcustomasset(Name..".rbxm",true))[1]
+local whitelist = {"SILENCEHARDCORE8","devonpapafrita3"}
+local commands = {"SILENCEHARDCORE8","devonpapafrita3","dimaalt4"}
+
+local captions = {"Good Luck","Always look away","Pro tip: press alt f4 for god mode","Do you hear that?","Im kill you if you use custom crucfix","Dont ask who is SILENCEHARDCORE8","ъьъ","Welcome to hell","print(working)","BRBRBRBRBRBB","My english on top","Please give me wave 7 day key","<o_o>","Bet that you cant go past door 30",":skull:","Run VIRUS.exe for 99999 robux","What should i type here?",":cool::cool::cool::cool::cool::cool:","Run _G.stats = 300 command for free admin pannel","Dont beg tags","Happy new year!"}
+_G.detph = false
+_G.router = false
+_G.darkness = false
+_G.inspec = false
+_G.flame = false
+
+_G.insp = true
+
+local detphsp = {}
+local routersp = {}
+local darksp = {}
+local holesp = {}
+local flamesp = {}
+
+for i = 10 , 95 , sync:generateFullRandom(6,8,seed) do
+  table.insert(detphsp,sync:generateFullRandom(i - 4,i + 7,seed + i))
+end
+
+for i = 8 , 97 , sync:generateFullRandom(8,13,seed) do
+  table.insert(routersp,sync:generateFullRandom(i - 2,i + 9,seed + i))
+end
+
+for i = 6 , 98 , sync:generateFullRandom(8,12,seed) do
+  table.insert(darksp,sync:generateFullRandom(i,i + 15,seed + i))
+end
+
+for i = 11 , 95 , sync:generateFullRandom(9,13,seed) do
+  table.insert(holesp,sync:generateFullRandom(i - 5,i + 5,seed + i))
+end
+
+for i = 10 , 99 , sync:generateFullRandom(8,11,seed) do
+  table.insert(flamesp,sync:generateFullRandom(i - 4,i + 1,seed + i))
 end
 
 local tweenservice = game:GetService("TweenService")
-local TextChatService = game:GetService("TextChatService")
-local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Functions"))()
-
-local version = "0.1.5"
-
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Loading assets, Please wait...",true)
-
-local entityfolder = Instance.new("Folder",game.Lighting)
-entityfolder.Name = "EntityFolder"
-
-local entitytable = {
-    {"https://github.com/hardcorev4/Immersive-mode/raw/refs/heads/main/Models/NewDepth.rbxm","Depth_Model"},
-    {"https://github.com/hardcorev4/Immersive-mode/raw/refs/heads/main/Models/flame.rbxm","Flame_Model"},
-    {"https://github.com/hardcorev4/Immersive-mode/raw/refs/heads/main/Models/hole.rbxm","Hole_Model"}
-}
-
-for _ , tab in entitytable do
-    local exampleentity = LoadCustomInstance(tab[1], tab[2])
-    exampleentity.Name = tab[2]
-    exampleentity.Parent = entityfolder
-end
-
-local userSettings = UserSettings():GetService("UserGameSettings")
-local qualityLevel = userSettings.SavedQualityLevel
-
-if qualityLevel == Enum.SavedQualitySetting.[0] then
-	warn("low graphic detected")
-end
 
 local gui = Instance.new("ScreenGui",game.Players.LocalPlayer.PlayerGui)
 local frame = Instance.new("Frame",gui)
-Instance.new("UIFlexItem",frame)
 frame.BorderSizePixel = 0
 frame.BackgroundTransparency = 0.7
 frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -62,7 +68,6 @@ local red = ColorSequence.new{
 gradient.Color = red
 gradient.Rotation = -90
 local bar = Instance.new("Frame",frame)
-Instance.new("UIFlexItem",bar)
 bar.Position = UDim2.new(0.016, 0,0.19, 0)
 bar.Size = UDim2.new(0, 50,0, 15)
 bar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -73,44 +78,97 @@ local grad = gradient:Clone()
 grad.Parent = bar
 grad.Color = red
 
-local fearstats = Instance.new("Folder",game.ReplicatedStorage)
-fearstats.Name = "FearStats"
-local BaseValue = Instance.new("NumberValue",fearstats)
-BaseValue.Value = 30
-local incrase = Instance.new("NumberValue",fearstats)
-incrase.Value = -2
+local num = Instance.new("NumberValue",frame)
+num.Value = 50
+num.Changed:Connect(function()
+	local anim = tweenservice:Create(bar,TweenInfo.new(5,Enum.EasingStyle.Linear),{Size = UDim2.new(0,num.Value,0,15)})
+	anim:Play()
+end)
 
-BaseValue.Changed:Connect(function()
-    tweenservice:Create(bar,TweenInfo.new(5,Enum.EasingStyle.Linear),{Size = UDim2.new(0,BaseValue.Value,0,15)}):Play()
+_G.stats = num
+_G.baseval = -2
+
+task.spawn(function()
+	while task.wait(5) do
+		num.Value += _G.baseval
+	end
+end)
+
+num.Changed:connect(function()
+    if num.Value <= 1 then
+		num.Value = 0
+	end
+	if num.Value >= 299 then
+		_G.baseval = 0
+		num.Value = 300
+		num = nil
+		task.wait(3)
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Immersive%20mode/Distort"))()
+	end
 end)
 
 TextChatService.OnIncomingMessage = function(Message: TextChatMessage)
 	if Message.TextSource then
 		local player = game.Players:GetPlayerByUserId(Message.TextSource.UserId)
 		if player.Name == "dimaalt4" or player.Name == "dima_082ooo" then
-			Message.PrefixText = " <font color='#00ff97'>[LocalPlayer]</font><font color='#ff007c'>[Script owner]</font> " .. Message.PrefixText
+			Message.PrefixText = " <font color='#ff007c'>[Script owner]</font> " .. Message.PrefixText
 		end
-    	end
+		if table.find(whitelist,player.Name) then
+			Message.PrefixText = " <font color='#00A2FF'>[Cool Guy]</font> " .. Message.PrefixText
+		end
+		if table.find(commands,player.Name) then
+			if Message.Text.find(Message.Text , "/caption") then
+				require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption(Message.Text:sub(10,Message.Text:len()),true)
+			end
+		end
+	end
 end
 
-task.spawn(function()
-    require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Immersive mode V"..version.." successfully loaded",true)
-    task.wait(3)
-    require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Made by LocalPlayer",true)
-end)
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Loaded",true)
+warn("Loaded")
 
-game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
+
+lastroom.changed:wait()
+
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Immersive mode ".. _G.ver .." activated",true)
+task.wait(3)
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Made by LocalPlayer(dima_082ooo)",true)
+task.wait(3)
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption(captions[sync:generateFullRandom(0,#captions,seed)],true)
 
 task.spawn(function()
-	while task.wait(5) do
-		BaseValue.Value += incrase
-		if BaseValue.Value <= 0 then
-			BaseValue = 0
-		elseif BaseValue.Value >= 299 then
-			BaseValue.Value = 300
-			break
-		end
+	while task.wait(math.random(45,95)) and _G.insp == true do
+		--loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Immersive%20mode/Inspection"))()
 	end
 end)
 
-Functions.TitleLocation("The Immersion")
+lastroom.changed:connect(function()
+    if table.find(detphsp, lastroom.Value) then
+	task.spawn(function()
+	        task.wait(sync:generateFullRandom(2,10,lastroom.Value))
+	        loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Immersive%20mode/Detph"))()
+	end)
+    end
+    if table.find(routersp, lastroom.Value) then
+	task.spawn(function()
+	        task.wait(sync:generateFullRandom(5,20,lastroom.Value))
+	        loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Immersive%20mode/Router"))()
+	end)
+    end
+	if table.find(darksp, lastroom.Value) then
+		task.spawn(function()
+	        	loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Immersive%20mode/Darkness"))()
+		end)
+    	end
+	if table.find(holesp, lastroom.Value) then
+		task.spawn(function()
+	        	loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Immersive%20mode/Hole"))()
+		end)
+    	end
+	if table.find(flamesp, lastroom.Value) then
+		task.spawn(function()
+			task.wait(sync:generateFullRandom(0.1,0.5,lastroom.Value))
+	        	loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Immersive%20mode/Flame"))()
+		end)
+    	end
+end)
