@@ -49,13 +49,17 @@ end
 
 local tweenservice = game:GetService("TweenService")
 
-local gui = Instance.new("ScreenGui",game.Players.LocalPlayer.PlayerGui)
-local frame = Instance.new("Frame",gui)
+local gui = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.Healthbar
+
+gui.Position = UDim2.new(0,10,0.945,-10)
+
+local frame = Instance.new("Frame",gui.Bar)
 frame.BorderSizePixel = 0
+frame.AnchorPoint = Vector2.new(0.5,0.5)
 frame.BackgroundTransparency = 0.7
 frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-frame.Position = UDim2.new(0.637, 0,0.88, 0)
-frame.Size = UDim2.new(0, 310,0, 25)
+frame.Position = UDim2.new(0.67, 0, 4, 0)
+frame.Size = UDim2.new(1.4, 0, 2.2, 0)
 frame.BackgroundColor3 = Color3.fromRGB(39,32,32)
 local corner = Instance.new("UICorner",frame)
 corner.CornerRadius = UDim.new(0.25,0)
@@ -69,43 +73,46 @@ local red = ColorSequence.new{
 }
 gradient.Color = red
 gradient.Rotation = -90
-local bar = Instance.new("Frame",frame)
-bar.Position = UDim2.new(0.016, 0,0.19, 0)
-bar.Size = UDim2.new(0, 50,0, 15)
-bar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+local helperbar = Instance.new("Frame",frame)
+helperbar.AnchorPoint = Vector2.new(0.5,0.5)
+helperbar.Position = UDim2.new(0.5, 0,0.5, 0)
+helperbar.Size = UDim2.new(0.965, 0,0.65,0)
+helperbar.BackgroundTransparency = 1
+helperbar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+helperbar.BorderSizePixel = 0
+
+local bar = Instance.new("Frame",helperbar)
 bar.BorderSizePixel = 0
+bar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+bar.Size = UDim2.new(0.2,0,1,0)
+
 local corner1 = corner:Clone()
 corner1.Parent = bar
 local grad = gradient:Clone()
 grad.Parent = bar
 grad.Color = red
 
-local num = Instance.new("NumberValue",frame)
-num.Value = 50
-num.Changed:Connect(function()
-	local anim = tweenservice:Create(bar,TweenInfo.new(5,Enum.EasingStyle.Linear),{Size = UDim2.new(0,num.Value,0,15)})
+local anim = tweenservice:Create(bar,TweenInfo.new(5,Enum.EasingStyle.Linear),{Size = UDim2.new(0,num.Value,0,15)})
+
+local fold = Instance.new("Folder",game.ReplicatedStorage)
+fold.Name = "Fear_stats"
+local stats = Instance.new("NumberValue",fold)
+stats.Name = "Fear"
+stats.Value = 50
+local basevalue = Instance.new("NumberValue",fold)
+basevalue.Name = "Base_val"
+basevalue.Value = -2
+
+stats.Changed:connect(function()
+	if stats.Value >= 299 then stats.Value = 300 end
+	if stats.Value <= 1 then stats.Value = 0 end
+	local anim = tweenservice:Create(bar,TweenInfo.new(5,Enum.EasingStyle.Linear),{Size = UDim2.new(stats.Value / 300,0,1,0)})
 	anim:Play()
 end)
 
-_G.stats = num
-_G.baseval = -2
-
 task.spawn(function()
 	while task.wait(5) do
-		num.Value += _G.baseval
-	end
-end)
-
-num.Changed:connect(function()
-    if num.Value <= 1 then
-		num.Value = 0
-	end
-	if num.Value >= 299 then
-		_G.baseval = 0
-		num.Value = 300
-		num = nil
-		task.wait(3)
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Immersive%20mode/Distort"))()
+		stats.Value += basevalue.Value
 	end
 end)
 
