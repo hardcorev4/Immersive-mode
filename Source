@@ -1,5 +1,5 @@
 warn("Loading")
-_G.ver = 1.1.0
+local ver = 1.1.0
 
 local sync = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/SyncHelper.lua"))()
 local seed = game.ReplicatedStorage.GameData.GameSeed.Value
@@ -137,7 +137,7 @@ TextChatService.OnIncomingMessage = function(Message: TextChatMessage)
 	end
 end
 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Loaded",true)
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Immersive mode version ".. ver .."successfully loaded",true)
 warn("Loaded")
 
 
@@ -145,7 +145,7 @@ lastroom.changed:wait()
 
 task.spawn(functions.TitleLocation, "The Immersion", 6)
 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Immersive mode ".. _G.ver .." activated",true)
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Immersive mode ".. ver .." activated",true)
 task.wait(3)
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Made by LocalPlayer(dima_082ooo)",true)
 task.wait(3)
