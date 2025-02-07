@@ -36,7 +36,6 @@ task.spawn(function()
 end)
 game.Workspace.CurrentRooms.ChildAdded:wait()
 damages = false
-_G.baseval = -2
 model.Ambience:Destroy()
 model.Spawn:Destroy()
 for _ , particle in model:GetDescendants() do
