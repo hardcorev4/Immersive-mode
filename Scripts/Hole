@@ -20,6 +20,9 @@ local anim = tweenservice:Create(atta.Light,TweenInfo.new(1,Enum.EasingStyle.Lin
 local anim1 = tweenservice:Create(atta.light2,TweenInfo.new(3,Enum.EasingStyle.Linear),{Brightness = 0.6})
 anim:Play()
 anim1:Play()
+
+game.ReplicatedStorage.Fear_stats.Base_val.Value += 7
+
 task.spawn(function()
 	while damages == true do
 	    task.wait(0.15)
@@ -49,5 +52,6 @@ local anim4 = tweenservice:Create(atta.face,TweenInfo.new(1,Enum.EasingStyle.Lin
 anim2:Play()
 anim3:Play()
 anim4:Play()
+game.ReplicatedStorage.Fear_stats.Base_val.Value -= 7
 task.wait(2)
 model:Destroy()
