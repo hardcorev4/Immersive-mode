@@ -9,7 +9,7 @@ end
 local damages = true
 local tweenservice = game:GetService("TweenService")
 
-local model = game:GetObjects("","Hole_model")[1].holenew
+local model = game:GetObjects("https://github.com/hardcorev4/Immersive-mode/raw/refs/heads/main/Models/hole.rbxm","Hole_model")[1].holenew
 local atta = model.atta
 atta.Light.Range = 0
 atta.Light2.Brightness = 0
