@@ -9,15 +9,15 @@ end
 local damages = true
 local tweenservice = game:GetService("TweenService")
 
-local model = game:GetObjects("https://github.com/hardcorev4/Immersive-mode/raw/refs/heads/main/Models/hole.rbxm","Hole_model")[1].holenew
+local model = LoadCustomInstance("https://github.com/hardcorev4/Immersive-mode/raw/refs/heads/main/Models/hole.rbxm","Hole_model").holenew
+model.Parent = game.Workspace
 local atta = model.atta
 atta.Light.Range = 0
-atta.Light2.Brightness = 0
+atta.light2.Brightness = 0
 model.Anchored = true
-model.Parent = game.Workspace
 model.CFrame = game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren() - 1].Parts.Floor.CFrame + Vector3.new(0,6,0)
 local anim = tweenservice:Create(atta.Light,TweenInfo.new(1,Enum.EasingStyle.Linear),{Range = 21})
-local anim1 = tweenservice:Create(atta.Light2,TweenInfo.new(3,Enum.EasingStyle.Linear),{Brightness = 0.6})
+local anim1 = tweenservice:Create(atta.light2,TweenInfo.new(3,Enum.EasingStyle.Linear),{Brightness = 0.6})
 anim:Play()
 anim1:Play()
 task.spawn(function()
@@ -25,7 +25,7 @@ task.spawn(function()
 	    task.wait(0.15)
 	    local _ , camera = game.Workspace.CurrentCamera:WorldToViewportPoint(model.Position)
 	    if not camera then
-            	game.Players.LocalPlayer.Character.Humanoid:TakeDamage(10)
+            	game.Players.LocalPlayer.Character.Humanoid:TakeDamage(5)
 	    end
 	if game.Players.LocalPlayer.Character.Humanoid.Health <= 0 then
                 firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"You died to who you call Hole...","He is love when someone staring at him","So keep your look at him!"},"Blue")
@@ -44,8 +44,8 @@ for _ , particle in model:GetDescendants() do
 	end
 end
 local anim2 = tweenservice:Create(atta.Light,TweenInfo.new(2,Enum.EasingStyle.Linear),{Range = 0})
-local anim3 = tweenservice:Create(atta.Light2,TweenInfo.new(2,Enum.EasingStyle.Linear),{Brightness = 0})
-local anim4 = tweenservice:Create(atta.face,TweenInfo.new(2,Enum.EasingStyle.Linear),{Brightness = 0})
+local anim3 = tweenservice:Create(atta.light2,TweenInfo.new(2,Enum.EasingStyle.Linear),{Brightness = 0})
+local anim4 = tweenservice:Create(atta.face,TweenInfo.new(1,Enum.EasingStyle.Linear),{Brightness = 0.01})
 anim2:Play()
 anim3:Play()
 anim4:Play()
