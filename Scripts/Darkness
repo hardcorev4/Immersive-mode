@@ -34,7 +34,7 @@ lastrooms:SetAttribute("Ambient",Color3.fromRGB(0,0,0))
 light(1,Color3.fromRGB(0,0,0),Color3.fromRGB(0,0,0))
 
 task.spawn(function()
-	_G.baseval = 5
+	game.ReplicatedStorage.Fear_stats.Base_val.Value += 7
 	task.wait(5)
 	sound:Play()
 	task.wait(5)
@@ -44,24 +44,23 @@ task.spawn(function()
 	until sound.Volume >= 0.49
 	if can == true then
 		game.Players.LocalPlayer.Character.Humanoid:TakeDamage(100)
-		 sound:Destroy()
+		sound:Destroy()
 		firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"You died to who you call Darkness...","He attack when lights turn off in every room","to survive him you need open next door!"},"Blue")
         	game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Darkness"
 	end
 end)
 
-lastroom.Changed:connect(function()
-	_G.baseval = -2
-	can = false
-	sound:Destroy()
-	task.wait(2)
-	if _G.darkness == false then
-		achievementGiver({
-		    Title = "Unknown",
-		    Desc = "No one know what can hide in the darkness",
-		    Reason = "Encounter Darkness",
-		    Image = "http://www.roblox.com/asset/?id=92630376345995"
-		})
+lastroom.Changed:wait()
+game.ReplicatedStorage.Fear_stats.Base_val.Value -= 7
+can = false
+sound:Destroy()
+task.wait(2)
+if _G.darkness == false then
+	achievementGiver({
+		Title = "Unknown",
+		Desc = "No one know what can hide in the darkness",
+		 Reason = "Encounter Darkness",
+		 Image = "http://www.roblox.com/asset/?id=92630376345995"
+	})
 	_G.darkness = true
-	end
-end)
+end
