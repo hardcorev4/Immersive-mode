@@ -1,14 +1,25 @@
+function LoadCustomInstance(url:string,Name:string)
+    if not isfile(Name..".rbxm") then
+        writefile(Name..".rbxm", game:HttpGet(url))
+    end
+
+    return game:GetObjects(getcustomasset(Name..".rbxm",true))[1]
+end
+
 local damages = true
 local tweenservice = game:GetService("TweenService")
 
-_G.baseval = 6
-local model = game:GetObjects("rbxassetid://12813331519")[1].holenew
-model.atta.Light.Range = 0
+local model = game:GetObjects("","Hole_model")[1].holenew
+local atta = model.atta
+atta.Light.Range = 0
+atta.Light2.Brightness = 0
 model.Anchored = true
 model.Parent = game.Workspace
 model.CFrame = game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren() - 1].Parts.Floor.CFrame + Vector3.new(0,6,0)
-local anim = tweenservice:Create(model.atta.Light,TweenInfo.new(1,Enum.EasingStyle.Linear),{Range = 21})
+local anim = tweenservice:Create(atta.Light,TweenInfo.new(1,Enum.EasingStyle.Linear),{Range = 21})
+local anim1 = tweenservice:Create(atta.Light2,TweenInfo.new(3,Enum.EasingStyle.Linear),{Brightness = 0.6})
 anim:Play()
+anim1:Play()
 task.spawn(function()
 	while damages == true do
 	    task.wait(0.15)
@@ -17,7 +28,7 @@ task.spawn(function()
             	game.Players.LocalPlayer.Character.Humanoid:TakeDamage(10)
 	    end
 	if game.Players.LocalPlayer.Character.Humanoid.Health <= 0 then
-                firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"You died to who you call Hole","If you see him dont look away","You should look at him or else you die"},"Blue")
+                firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"You died to who you call Hole...","He is love when someone staring at him","So keep your look at him!"},"Blue")
                 game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Hole"
             end
 
@@ -28,7 +39,16 @@ damages = false
 _G.baseval = -2
 model.Ambience:Destroy()
 model.Spawn:Destroy()
-local anim1 = tweenservice:Create(model.atta.Light,TweenInfo.new(2,Enum.EasingStyle.Linear),{Range = 0})
-anim1:Play()
+for _ , particle in model:GetDescendants() do
+	if particle:IsA("ParticleEmitter") and particle.Name ~= "face" then
+		particle.TimeScale = 0
+	end
+end
+local anim2 = tweenservice:Create(atta.Light,TweenInfo.new(2,Enum.EasingStyle.Linear),{Range = 0})
+local anim3 = tweenservice:Create(atta.Light2,TweenInfo.new(2,Enum.EasingStyle.Linear),{Brightness = 0})
+local anim4 = tweenservice:Create(atta.face,TweenInfo.new(2,Enum.EasingStyle.Linear),{Brightness = 0})
+anim2:Play()
+anim3:Play()
+anim4:Play()
 task.wait(2)
 model:Destroy()
