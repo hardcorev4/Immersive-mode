@@ -1,5 +1,5 @@
 warn("Loading")
-_G.ver = 0.7
+_G.ver = 1.1.0
 
 local sync = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/SyncHelper.lua"))()
 local seed = game.ReplicatedStorage.GameData.GameSeed.Value
@@ -50,6 +50,10 @@ end
 local tweenservice = game:GetService("TweenService")
 
 local gui = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.Healthbar
+
+gui.Bar.Visible = true
+
+gui.Bar:GetPropertyChangedSignal("Visible"):connect(function() if gui.Bar.Visible == false then gui.Bar.Visible = true end)
 
 gui.Position = UDim2.new(0,10,0.945,-10)
 
