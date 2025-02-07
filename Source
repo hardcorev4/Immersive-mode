@@ -47,13 +47,15 @@ for i = 10 , 99 , sync:generateFullRandom(8,11,seed) do
   table.insert(flamesp,sync:generateFullRandom(i - 4,i + 1,seed + i))
 end
 
-local tweenservice = game:GetService("TweenService")
-
 local gui = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.Healthbar
 
 gui.Bar.Visible = true
 
-gui.Bar:GetPropertyChangedSignal("Visible"):connect(function() if gui.Bar.Visible == false then gui.Bar.Visible = true end)
+gui.Bar:GetPropertyChangedSignal("Visible"):connect(function() 
+    if gui.Bar.Visible == false then 
+        gui.Bar.Visible = true 
+    end
+end)
 
 gui.Position = UDim2.new(0,10,0.945,-10)
 
@@ -95,8 +97,6 @@ corner1.Parent = bar
 local grad = gradient:Clone()
 grad.Parent = bar
 grad.Color = red
-
-local anim = tweenservice:Create(bar,TweenInfo.new(5,Enum.EasingStyle.Linear),{Size = UDim2.new(0,num.Value,0,15)})
 
 local fold = Instance.new("Folder",game.ReplicatedStorage)
 fold.Name = "Fear_stats"
