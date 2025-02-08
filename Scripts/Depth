@@ -20,8 +20,8 @@ end
 
 local entity = spawner.Create({
 	Entity = {
-		Name = "Template Entity",
-		Asset = "rbxassetid://17508750627",
+		Name = "Depth",
+		Asset = "https://github.com/hardcorev4/Immersive-mode/blob/main/Models/depth.rbxm",
 		HeightOffset = 0
 	},
 	Lights = {
@@ -71,6 +71,7 @@ local entity = spawner.Create({
 })
 
 entity:SetCallback("OnDespawned", function()
+	game.ReplicatedStorage.Fear_stats.Base_val.Value -= 5
 	if _G.detph == false then
 	    	achievementGiver({
 		    Title = "Blue Depths",
@@ -83,41 +84,7 @@ entity:SetCallback("OnDespawned", function()
 end)
 
 entity:SetCallback("OnDamagePlayer", function(newHealth)
-	local sound = Instance.new("Sound",game.Workspace)
-	sound.SoundId = "rbxassetid://131138848"
-	local octave = Instance.new("PitchShiftSoundEffect",sound)
-	octave.Octave = 0.5
-	local level = Instance.new("DistortionSoundEffect",sound)
-	level.Level = 0.97
-	
-	local screen = Instance.new("ScreenGui",game.Players.LocalPlayer.PlayerGui)
-	
-	local background = Instance.new("Frame",screen)
-	background.AnchorPoint = Vector2.new(0.5,0.5)
-	background.Size = UDim2.new(10,0,10,0)
-	background.BackgroundColor3 = Color3.fromRGB(0, 157, 255)
-	local image = Instance.new("ImageLabel",screen)
-	image.AnchorPoint = Vector2.new(0.5,0.5)
-	image.Position = UDim2.new(0.5, 0, 0.5, 0)
-	image.BackgroundTransparency = 1
-	image.Size = UDim2.new(0, 50, 0, 50)
-	image.LayoutOrder = 0
-	image.BorderSizePixel = 0
-	image.Image = "http://www.roblox.com/asset/?id=11278229112"
-	
-	task.spawn(function()
-		while task.wait(0.08) do
-			background.BackgroundColor3 = Color3.fromRGB(0, 17, 255)
-			task.wait(0.08)
-			background.BackgroundColor3 = Color3.fromRGB(0, 157, 255)
-		end
-	end)
-	
-	sound:Play()
-	
-	game:GetService("TweenService"):Create(image,TweenInfo.new(0.25,Enum.EasingStyle.Linear),{Size = UDim2.new(0, 1300, 0, 1300)}):Play()
-	task.wait(1)
-	screen:Destroy()
+
 end)
 
 light(2,Color3.fromRGB(127, 249, 255),Color3.fromRGB(0, 174, 255))
@@ -136,5 +103,4 @@ wait(2)
 sound:Destroy()
 
 entity:Run()
-task.wait(5)
-_G.stats.Value += 45
+game.ReplicatedStorage.Fear_stats.Base_val.Value += 5
