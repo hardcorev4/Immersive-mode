@@ -122,7 +122,7 @@ local entity = spawner.Create({
 
 entity:SetCallback("OnDespawning", function()
 	eia = false
-	moved:Disconnect()
+	task.spawn(light,2.5,Color3.fromRGB(202, 87, 49),Color3.fromRGB(255, 150, 0))
 	if _G.router == false then	
 	    	achievementGiver({
 		    Title = "Stop",
@@ -132,9 +132,8 @@ entity:SetCallback("OnDespawning", function()
 		})
 		_G.router = true
 	end
-	light(2.5,Color3.fromRGB(202, 87, 49),Color3.fromRGB(255, 150, 0))
 end)
 
 entity:Run()
 task.wait(10)
-_G.stats.Value += 50
+game.ReplicatedStorage.Fear_stats.Fear.Value += 50
