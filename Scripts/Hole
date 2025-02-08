@@ -24,8 +24,7 @@ anim1:Play()
 game.ReplicatedStorage.Fear_stats.Base_val.Value += 7
 
 task.spawn(function()
-	while damages == true do
-	    task.wait(0.15)
+	while damages == true and task.wait(0.15) do
 	    local _ , camera = game.Workspace.CurrentCamera:WorldToViewportPoint(model.Position)
 	    if not camera then
             	game.Players.LocalPlayer.Character.Humanoid:TakeDamage(5)
