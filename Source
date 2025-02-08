@@ -1,5 +1,5 @@
 warn("Loading")
-local ver = 1.1.0
+local ver = "1.1.0"
 
 local sync = loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAcceleration/Comet-Development/refs/heads/main/Doors/Utility/SyncHelper.lua"))()
 local seed = game.ReplicatedStorage.GameData.GameSeed.Value
@@ -120,7 +120,7 @@ task.spawn(function()
 	end
 end)
 
-TextChatService.OnIncomingMessage = function(Message: TextChatMessage)
+TextChatService.OnIncomingMessage = function(Message)
 	if Message.TextSource then
 		local player = game.Players:GetPlayerByUserId(Message.TextSource.UserId)
 		if player.Name == "dimaalt4" or player.Name == "dima_082ooo" then
