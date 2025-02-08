@@ -21,7 +21,7 @@ end
 local entity = spawner.Create({
 	Entity = {
 		Name = "Depth",
-		Asset = "https://github.com/hardcorev4/Immersive-mode/blob/main/Models/depth.rbxm",
+		Asset = "https://github.com/hardcorev4/Immersive-mode/raw/refs/heads/main/Models/depth.rbxm",
 		HeightOffset = 0
 	},
 	Lights = {
