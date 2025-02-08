@@ -92,7 +92,7 @@ light(2,Color3.fromRGB(127, 249, 255),Color3.fromRGB(0, 174, 255))
 local sound = Instance.new("Sound",game.Workspace)
 sound.SoundId = "rbxassetid://12221990"
 sound.PlaybackSpeed = 0.2
-sound.Volume = 5
+sound.Volume = 1
 local octave = Instance.new("PitchShiftSoundEffect",sound)
 octave.Octave = 0.5
 local lvl = Instance.new("DistortionSoundEffect",sound)
