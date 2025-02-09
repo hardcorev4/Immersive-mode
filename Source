@@ -43,8 +43,8 @@ for i = 11 , 95 , sync:generateFullRandom(11,15,seed) do
   table.insert(holesp,sync:generateFullRandom(i - 5,i + 5,seed + i))
 end
 
-for i = 10 , 99 , sync:generateFullRandom(10,13,seed) do
-  table.insert(flamesp,sync:generateFullRandom(i - 4,i + 1,seed + i))
+for i = 10 , 92 , sync:generateFullRandom(10,13,seed) do
+  table.insert(flamesp,sync:generateFullRandom(i - 4,i + 8,seed + i))
 end
 
 local gui = game.Players.LocalPlayer.PlayerGui.MainUI.MainFrame.Healthbar
