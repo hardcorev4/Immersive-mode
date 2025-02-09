@@ -1,0 +1,15 @@
+function LoadCustomInstance(url:string,Name:string)
+    if not isfile(Name..".rbxm") then
+        writefile(Name..".rbxm", game:HttpGet(url))
+    end
+
+    return game:GetObjects(getcustomasset(Name..".rbxm",true))[1]
+end
+
+local functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Functions"))()
+
+local entity = LoadCustomInstance("","Researcher_model") 
+
+entity.CFrame = game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren()].RoomExit.CFrame
+
+functions.LightRecolor()
