@@ -1,15 +1,23 @@
 function LoadCustomInstance(url:string,Name:string)
-    if not isfile(Name..".rbxm") then
-        writefile(Name..".rbxm", game:HttpGet(url))
-    end
+	if not isfile(Name..".rbxm") then
+		writefile(Name..".rbxm", game:HttpGet(url))
+	end
 
-    return game:GetObjects(getcustomasset(Name..".rbxm",true))[1]
+	return game:GetObjects(getcustomasset(Name..".rbxm",true))[1]
 end
 
 local functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Functions"))()
 
-local entity = LoadCustomInstance("","Researcher_model") 
+local entity = LoadCustomInstance("","Researcher_model").ResearcherNew
 
 entity.CFrame = game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren()].RoomExit.CFrame
 
-functions.LightRecolor()
+functions.LightsRecolor(1.5,Color3.fromRGB(255, 126, 145),Color3.fromRGB(255, 0, 100),Color3.fromRGB(98, 55, 132))
+
+function MoveTo(cframe)
+	local distance = (entity.Position - cframe.Position).Magnitude
+	local speed = distance / 16
+	local tween = game:GetService("TweenService"):Create(entity,TweenInfo.new(speed,Enum.EasingStyle.Linear),{CFrame = cframe})
+	tween:Play()
+	task.wait(speed)
+end
