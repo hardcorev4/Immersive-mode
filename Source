@@ -27,23 +27,23 @@ local darksp = {}
 local holesp = {}
 local flamesp = {}
 
-for i = 10 , 95 , sync:generateFullRandom(6,8,seed) do
+for i = 10 , 95 , sync:generateFullRandom(8,10,seed) do
   table.insert(detphsp,sync:generateFullRandom(i - 4,i + 7,seed + i))
 end
 
-for i = 8 , 97 , sync:generateFullRandom(8,13,seed) do
+for i = 8 , 97 , sync:generateFullRandom(10,15,seed) do
   table.insert(routersp,sync:generateFullRandom(i - 2,i + 9,seed + i))
 end
 
-for i = 6 , 98 , sync:generateFullRandom(8,12,seed) do
+for i = 6 , 98 , sync:generateFullRandom(10,14,seed) do
   table.insert(darksp,sync:generateFullRandom(i,i + 15,seed + i))
 end
 
-for i = 11 , 95 , sync:generateFullRandom(9,13,seed) do
+for i = 11 , 95 , sync:generateFullRandom(11,15,seed) do
   table.insert(holesp,sync:generateFullRandom(i - 5,i + 5,seed + i))
 end
 
-for i = 10 , 99 , sync:generateFullRandom(8,11,seed) do
+for i = 10 , 99 , sync:generateFullRandom(10,13,seed) do
   table.insert(flamesp,sync:generateFullRandom(i - 4,i + 1,seed + i))
 end
 
