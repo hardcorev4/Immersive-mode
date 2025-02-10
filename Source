@@ -163,12 +163,14 @@ lastroom.changed:connect(function()
     if table.find(detphsp, lastroom.Value) then
 	task.spawn(function()
 	        task.wait(sync:generateFullRandom(2,10,lastroom.Value))
+		warn("depth")
 	        loadstring(game:HttpGet("https://raw.githubusercontent.com/hardcorev4/Immersive-mode/refs/heads/main/Scripts/Depth"))()
 	end)
     end
     if table.find(routersp, lastroom.Value) then
 	task.spawn(function()
 	        task.wait(sync:generateFullRandom(5,20,lastroom.Value))
+		warn("router")
 	        loadstring(game:HttpGet("https://raw.githubusercontent.com/hardcorev4/Immersive-mode/refs/heads/main/Scripts/Router"))()
 	end)
     end
