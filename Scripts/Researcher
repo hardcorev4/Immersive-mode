@@ -8,11 +8,15 @@ end
 
 local functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Functions"))()
 
-local entity = LoadCustomInstance("https://github.com/hardcorev4/Immersive-mode/raw/refs/heads/main/Models/flame.rbxm","Researcher_model").FlameNew
+local entity = Instance.new("Part")
+
+entity.Anchored = true
+
+entity.Parent = game.Workspace
 
 entity.CFrame = game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren()].RoomExit.CFrame
 
-functions.LightsRecolor(1.5,Color3.fromRGB(255, 126, 145),Color3.fromRGB(255, 0, 100),Color3.fromRGB(98, 55, 132))
+functions.LightRecolor(1.5,Color3.fromRGB(255, 126, 145),Color3.fromRGB(255, 0, 100),Color3.fromRGB(98, 55, 132))
 
 function MoveTo(cframe)
 	local distance = (entity.Position - cframe.Position).Magnitude
@@ -22,21 +26,47 @@ function MoveTo(cframe)
 	task.wait(speed)
 end
 
-for i = #game.Workspace.CurrentRooms:GetChildren(),2,-1 do
-	local room = #game.Workspace.CurrentRooms:GetChildren()[i]
-	if room then
-		local nodes = room:FindFirstChild("PathFindNodes")
-		if nodes then
-			nodes = nodes:Getchildren()
-			table.sort(nodes,function(a , b) return tonumber(a.Name) > tonumber(b.Name) end)
-			for _ , node in nodes do
-				if node.parent then
-					MoveTo(node.CFrame)
-				end
-			end
-		end
-		if room then
-			MoveTo(room.RoomEntrance.CFrame)
-		end
-	end
+for i = 0,1,1 do
+
+    entity.CFrame = game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren()].RoomExit.CFrame
+
+    for i = #game.Workspace.CurrentRooms:GetChildren(),3,-1 do
+        local room = game.Workspace.CurrentRooms:GetChildren()[i]
+        if room then
+            local nodes = room:FindFirstChild("PathFindNodes")
+            if nodes then
+                nodes = nodes:Getchildren()
+                table.sort(nodes,function(a , b) return tonumber(a.Name) > tonumber(b.Name) end)
+                for _ , node in nodes do
+                    if node.parent then
+                        MoveTo(node.CFrame)
+                    end
+                end
+            end
+            if room then
+                MoveTo(room.RoomEntrance.CFrame)
+            end
+        end
+    end
+
+    entity.CFrame = game.Workspace.CurrentRooms:GetChildren()[1].RoomEntrance.CFrame
+
+    for i = 1,#game.Workspace.CurrentRooms:GetChildren() - 1,1 do
+        local room = game.Workspace.CurrentRooms:GetChildren()[i]
+        if room then
+            local nodes = room:FindFirstChild("PathFindNodes")
+            if nodes then
+                nodes = nodes:Getchildren()
+                table.sort(nodes,function(a , b) return tonumber(a.Name) > tonumber(b.Name) end)
+                for _ , node in nodes do
+                    if node.parent then
+                        MoveTo(node.CFrame)
+                    end
+                end
+            end
+            if room then
+                MoveTo(room.RoomEntrance.CFrame)
+            end
+        end
+    end
 end
