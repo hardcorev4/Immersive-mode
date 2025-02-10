@@ -21,3 +21,22 @@ function MoveTo(cframe)
 	tween:Play()
 	task.wait(speed)
 end
+
+for i = #game.Workspace.CurrentRooms:GetChildren(),2,-1 do
+	local room = #game.Workspace.CurrentRooms:GetChildren()[i]
+	if room then
+		local nodes = room:FindFirstChild("PathFindNodes")
+		if nodes then
+			nodes = nodes:Getchildren()
+			table.sort(nodes,function(a , b) return tonumber(a.Name) > tonumber(b.Name) end)
+			for _ , node in nodes do
+				if node.parent then
+					MoveTo(node.CFrame)
+				end
+			end
+		end
+		if room then
+			MoveTo(room.RoomEntrance.CFrame)
+		end
+	end
+end
