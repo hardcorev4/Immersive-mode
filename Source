@@ -137,15 +137,15 @@ TextChatService.OnIncomingMessage = function(Message)
 	end
 end
 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Immersive mode version ".. ver .."successfully loaded",true)
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Immersive mode version ".. ver .." ".."successfully loaded",true)
 warn("Loaded")
 
 
 lastroom.changed:wait()
 
-task.spawn(functions.TitleLocation, "The Immersion", 6)
+task.spawn(functions.TitleLocation, "The Immersion", 7)
 
-require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Immersive mode ".. ver .." activated",true)
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Immersive mode "..ver.."  activated",true)
 task.wait(3)
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Made by LocalPlayer(dima_082ooo)",true)
 task.wait(3)
@@ -161,33 +161,33 @@ end)
 
 lastroom.changed:connect(function()
     if table.find(detphsp, lastroom.Value) then
-	task.spawn(function()
+	    task.spawn(function()
 	        task.wait(sync:generateFullRandom(2,10,lastroom.Value))
-		warn("depth")
+		    warn("depth")
 	        loadstring(game:HttpGet("https://raw.githubusercontent.com/hardcorev4/Immersive-mode/refs/heads/main/Scripts/Depth"))()
-	end)
+	    end)
     end
     if table.find(routersp, lastroom.Value) then
-	task.spawn(function()
+	    task.spawn(function()
 	        task.wait(sync:generateFullRandom(5,20,lastroom.Value))
-		warn("router")
+		    warn("router")
 	        loadstring(game:HttpGet("https://raw.githubusercontent.com/hardcorev4/Immersive-mode/refs/heads/main/Scripts/Router"))()
-	end)
+	    end)
     end
 	if table.find(darksp, lastroom.Value) then
 		task.spawn(function()
-	        	loadstring(game:HttpGet("https://raw.githubusercontent.com/hardcorev4/Immersive-mode/refs/heads/main/Scripts/Darkness"))()
+	        loadstring(game:HttpGet("https://raw.githubusercontent.com/hardcorev4/Immersive-mode/refs/heads/main/Scripts/Darkness"))()
 		end)
-    	end
+    end
 	if table.find(holesp, lastroom.Value) then
 		task.spawn(function()
-	        	loadstring(game:HttpGet("https://raw.githubusercontent.com/hardcorev4/Immersive-mode/refs/heads/main/Scripts/Hole"))()
+	        loadstring(game:HttpGet("https://raw.githubusercontent.com/hardcorev4/Immersive-mode/refs/heads/main/Scripts/Hole"))()
 		end)
-    	end
+    end
 	if table.find(flamesp, lastroom.Value) then
 		task.spawn(function()
 			task.wait(0.5)
-	        	loadstring(game:HttpGet("https://raw.githubusercontent.com/hardcorev4/Immersive-mode/refs/heads/main/Scripts/Flame"))()
+	        loadstring(game:HttpGet("https://raw.githubusercontent.com/hardcorev4/Immersive-mode/refs/heads/main/Scripts/Flame"))()
 		end)
-    	end
+    end
 end)
