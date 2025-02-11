@@ -137,6 +137,12 @@ TextChatService.OnIncomingMessage = function(Message)
 	end
 end
 
+game.Workspace.CurrentRooms.ChildAdded:connect(function(added)
+	local b = added:FindFirstChild("PathFindNodes")
+	if b then b = b:Clone() end
+	b.Parent = added
+end)
+
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Immersive mode version ".. ver .." ".."successfully loaded",true)
 warn("Loaded")
 
